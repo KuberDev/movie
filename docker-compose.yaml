@@ -1,0 +1,32 @@
+version: "3.8"
+networks:
+  movie_network:
+    driver: bridge
+  movie_data_network:
+    driver: bridge
+
+volumes:
+  movie_data: {}
+
+services:
+  app:
+    build: ./src
+    networks:
+      - movie_network
+      - movie_data_network
+    depends_on:
+      - db
+    environment:
+      MONGODB_URI: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@db:27017/${MONGO_DB_DATABASE_NAME}
+
+  db:
+    image: mongo:${MONGO_VERSION}
+    # ports:
+    #   - 27017:27017
+    networks:
+      - movie_data_network
+    volumes:
+      - movie_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD:  ${MONGODB_PASSWORD}

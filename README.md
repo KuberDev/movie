@@ -1,5 +1,15 @@
 # Serviço de listagem de filmes
 
+
+## Developer Notes:
+### To run:
+- `docker-compose up -d`
+- open http://localhost:8181/
+### Verified problem:
+- http://localhost:8181/health -> "ReferenceError: serverStatus is not defined"
+
+
+
 Esse projeto é um serviço de listagem de filmes. 
 
 ## Estrutura do projeto
